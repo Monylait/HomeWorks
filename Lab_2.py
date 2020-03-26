@@ -28,8 +28,9 @@ try:
     print("This parameters was found in you file >>\n")
     for key in main_dict.keys():
             print(key)
+    print("\nHello!")
     while flag:
-        print("\nHello! Please, enter name of parameter after this words << get param ...>>")
+        print("Please, enter name of parameter after this words << get param ...>>")
         command=input("get param ")  
         try:
             print('Value ',main_dict[command])
