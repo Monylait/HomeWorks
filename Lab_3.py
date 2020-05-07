@@ -83,6 +83,12 @@ class REPLACE(Parent):
             key_dict=self.read_key()
         encrypt_file=self.read_encrypt()
         line=encrypt_file.readline()
+        confirm=line.split(' ')
+        while confirm[5]!=':Replacement\n':
+            print('Wrong encode file, pleas enter correct encode file')
+            encrypt_file=self.read_encrypt()
+            line=encrypt_file.readline()
+            confirm=line.split(' ')
         new_line=''
         flag=True
         print("Enter name for file with decrypt text")
@@ -240,6 +246,11 @@ class TRANSPOS(Parent):
                 key_list=self.read_key()
             encrypt_file=self.read_encrypt()
             line=encrypt_file.readline()
+            while confirm[5]!='Transpositions!\n':
+                print('Wrong encode file, pleas enter correct encode file')
+                encrypt_file=self.read_encrypt()
+                line=encrypt_file.readline()
+                confirm=line.split(' ')
             line=encrypt_file.read() 
             if key_list[-1]=='':
                key_list.pop()
@@ -399,9 +410,15 @@ class XOR(Parent):
 
     def revers(self):
         encrypt_file=self.read_encrypt()
+        line=encrypt_file.readline()
+        confirm=line.split(' ')
+        while confirm[5]!='XOR!\n':
+                print('Wrong encode file, pleas enter correct encode file')
+                encrypt_file=self.read_encrypt()
+                line=encrypt_file.readline()
+                confirm=line.split(' ')
         list_alph=list()
         list_key=list()
-        index=0
         i=0
         all_list=self.read_XORkey()
         while all_list==None:
@@ -409,6 +426,7 @@ class XOR(Parent):
             all_list=self.read_XORkey()
         list_alph=all_list[0]
         list_key=all_list[1]
+        index=all_list[2]
         if list_key[-1]=='XOR':
             list_key.pop()
         index=all_list[2]
@@ -417,8 +435,7 @@ class XOR(Parent):
         encode_ellement=''
         exit=0
         print("Pleas, enter way for file with decrypt text ")
-        with open(self._enter_way("txt"),'w',encoding='utf-8') as decrypt_file:
-            line=encrypt_file.readline()
+        with open(self._enter_way("txt"),'w',encoding='utf-8') as decrypt_file:            
             while exit!=100:
                 text=encrypt_file.read(len(list_key))
                 i=0
