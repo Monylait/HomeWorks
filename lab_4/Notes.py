@@ -33,8 +33,9 @@ def create_notes(way:str,loggin:str):
                 list=command.split(".")
                 list.reverse()
                 if list[0]=='txt':
+                    list_errors=["\\","/",":","*","?","\"","|","<",">"]
                     for ch in command:
-                        if ch=="\\" or ch=="/" or ch==":" or ch=="*" or ch=="?" or ch=="\"" or ch=="|" or ch=="<" or ch==">":
+                        if list_errors.count(ch)!=0:
                             print("bad name for file - you use incorrect symbols")
                             break    
                     flag=False
@@ -68,8 +69,9 @@ def work_with_notes(way:str,loggin:str):
                     list=command.split(".")
                     list.reverse()
                     if list[0]=='txt':
+                        list_errors=["\\","/",":","*","?","\"","|","<",">"]
                         for ch in command:
-                            if ch=="\\" or ch=="/" or ch==":" or ch=="*" or ch=="?" or ch=="\"" or ch=="|" or ch=="<" or ch==">":
+                            if list_errors.count(ch)!=0:
                                 print("bad name for file - you use incorrect symbols")
                                 break    
                         flag=False
@@ -91,10 +93,14 @@ def work_with_notes(way:str,loggin:str):
 def delete_note(way:str,loggin:str):
     i=0
     flag=True
-    command=input("Are you really need delete note? If yes, enter name of note for delete ")
+    command=input("Are you really need delete note?" 
+                  "If yes, enter name of note for delete "
+                  )
     while flag:
         if i!=0:
-            command=input("Enter correct name of note, pelase, with file extension(.txt)")
+            command=input("Enter correct name of note,"
+                          "pelase, with file extension(.txt)"
+                          )
         list=command.split('.')
         list.reverse()
         if list[0]=='txt':
