@@ -1,6 +1,6 @@
-import Security
 import os
 import shutil
+import Security
 import client_socket as cl_s
 
 def write_new_acc(loggin:str,new_password:str,way:str):
@@ -28,7 +28,9 @@ def CreateAcc(way_for_sys_file:str):
                 line_list=line.split()
                 loggin_list.append(line_list[0])
     except FileNotFoundError:
-        print("Записи о каких-либо аккаунтах не найдены, поздравляю - вы первый пользователь!\n")
+        print("Записи о каких-либо аккаунтах не найдены, поздравляю "
+              "- вы первый пользователь!\n"
+              )
     flag=True
     i=0
     while flag:
