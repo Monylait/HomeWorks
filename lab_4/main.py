@@ -1,11 +1,11 @@
+import os
 import Autorizeid as Auto
 import Work_with_Acc as Cr_A
 import Notes
-import os
 import Security
 
 path_old=os.getcwd()
-path_new=path_old+"\Lab_4_Files"
+path_new=os.path.join(path_old,'Lab_4_Files') #path_old+"\Lab_4_Files"
 try:
     if not os.path.isdir(path_new):
         os.mkdir(path_new)
@@ -40,7 +40,7 @@ while flag:
                                           ))
                         if command==1:
                             print(">> Работа с заметками <<\n")
-                            Notes.acc_info(path_new+"\\"+loggin,loggin)
+                            Notes.acc_info(os.path.join(path_new,loggin),loggin)  #path_new+"\\"+loggin,loggin
                             flag_3=True
                             while flag_3:
                                 try:
@@ -50,7 +50,7 @@ while flag:
                                                       "3) Удаление заметок\n\t"
                                                       "4)Выход в меню управления аккаунтом\n"
                                                       ))
-                                    way=path_new+"\\"+loggin
+                                    way=os.path.join(path_new,loggin)#path_new+"\\"+loggin
                                     if command==1:
                                         print(">> Создание новых заметок <<")
                                         Notes.create_notes(way,loggin)
@@ -86,7 +86,7 @@ while flag:
         else:
             print("Wrong input")
     except ValueError:
-        Security.security_sys_files(path_new+"\\"+"config_acc.conf")
+        Security.security_sys_files(os.path.join(path_new,"config_acc.conf")) #path_new+"\\"+"config_acc.conf")
         print("Local error, try please ")
     except ConnectionRefusedError:
         print("Server not working, error")

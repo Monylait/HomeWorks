@@ -1,3 +1,4 @@
+import os
 import hashlib
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
@@ -25,12 +26,12 @@ def generate_keys(loggin:str,way:str):
         protection="scryptAndAES128-CBC"
     )
     
-    with open(way+'\\'+'private_rsa_key.bin', 'wb') as file_key:
+    with open(os.path.join(way,'private_rsa_key.bin'), 'wb') as file_key: #way+'\\'+'private_rsa_key.bin'
         file_key.write(encrypted_key)
-    security_sys_files(way+'\\'+'private_rsa_key.bin')
-    with open(way+'\\'+'rsa_public.pem', 'wb') as file_key:
+    security_sys_files(os.path.join(way,'private_rsa_key.bin')) #way+'\\'+'private_rsa_key.bin'
+    with open(os.path.join(way,'rsa_public.pem'), 'wb') as file_key: #way+'\\'+'rsa_public.pem'
         file_key.write(key.publickey().exportKey())
-    security_sys_files(way+'\\'+'rsa_public.pem')
+    security_sys_files(os.path.join(way,'rsa_public.pem')) #way+'\\'+'rsa_public.pem'
 
 def security_files(way:str,name_file:str):
     data=''

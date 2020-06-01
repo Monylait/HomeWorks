@@ -18,7 +18,7 @@ def write_new_acc(loggin:str,new_password:str,way:str):
 
 def CreateAcc(way_for_sys_file:str):
     loggin_list=list()
-    way=way_for_sys_file+"\config_acc.conf"
+    way=os.path.join(way_for_sys_file,"config_acc.conf")#way_for_sys_file+"\config_acc.conf"
     cl_s.private()
     try:
         Security.decode_sys_files(way)
@@ -68,21 +68,21 @@ def CreateAcc(way_for_sys_file:str):
                 write_new_acc(loggin,new_password.encode('utf-8'),way)
                 print("Account was succesfull create")
                 try:
-                    if not os.path.isdir(way_for_sys_file+"\\"+loggin):
-                        os.mkdir(way_for_sys_file+"\\"+loggin)
+                    if not os.path.isdir(os.path.join(way_for_sys_file,loggin)): #way_for_sys_file+"\\"+loggin
+                        os.mkdir(os.path.join(way_for_sys_file,loggin))
                 except OSError:
                     print ("Создать директорию %s не удалось" %path_new )
                 try:
-                    if not os.path.isdir(way_for_sys_file+"\\"+loggin+"\\"+"Notes"):
-                        os.mkdir(way_for_sys_file+"\\"+loggin+"\\"+"Notes")
+                    if not os.path.isdir(os.path.join(way_for_sys_file,loggin,"Notes")): #way_for_sys_file+"\\"+loggin+"\\"+"Notes"
+                        os.mkdir(os.path.join(way_for_sys_file,loggin,"Notes"))
                 except OSError:
                     print ("Создать директорию %s не удалось" %path_new )
                 try:
-                    if not os.path.isdir(way_for_sys_file+"\\"+loggin+"\\"+"Keys"):
-                        os.mkdir(way_for_sys_file+"\\"+loggin+"\\"+"Keys")
+                    if not os.path.isdir(os.path.join(way_for_sys_file,loggin,"Keys")): #way_for_sys_file+"\\"+loggin+"\\"+"Keys"
+                        os.mkdir(os.path.join(way_for_sys_file,loggin,"Keys"))
                 except OSError:
                     print ("Создать директорию %s не удалось" %path_new )
-                Security.generate_keys(loggin,way_for_sys_file+"\\"+loggin+"\\"+"Keys")
+                Security.generate_keys(loggin,os.path.join(way_for_sys_file,loggin,"Keys")) #way_for_sys_file+"\\"+loggin+"\\"+"Keys"
                 flag=False
         except ValueError:
             Security.security_sys_files(way)
@@ -94,7 +94,7 @@ def CreateAcc(way_for_sys_file:str):
            
 
 def delete_acc(way_for_sys_file:str,loggin:str):
-    way=way_for_sys_file+"\config_acc.conf"
+    way=os.path.join(way_for_sys_file,"config_acc.conf")#way_for_sys_file+"\config_acc.conf"
     Loggin_dict=dict()
     flag=True
     while flag:
@@ -111,7 +111,7 @@ def delete_acc(way_for_sys_file:str,loggin:str):
                         string=string+key+" "+Loggin_dict[key]
                         config_file.write(string)
             Security.security_sys_files(way)
-            way=way_for_sys_file+"\\"+loggin
+            way=os.path.join(way_for_sys_file,loggin)#way_for_sys_file+"\\"+loggin
             shutil.rmtree(way)
             print("Account succesfull delete")
             flag=False

@@ -1,3 +1,4 @@
+import os
 import Security
 
 
@@ -5,7 +6,7 @@ def read_sys_file(way_for_sys_file:str)->int and str:
     loggin_list=list()
     password_list=list()
     users_dict=dict()
-    way=way_for_sys_file+"\config_acc.conf"
+    way=os.path.join(way_for_sys_file,"config_acc.conf") #way_for_sys_file+"\config_acc.conf"
     try:
         Security.decode_sys_files(way)
     except FileNotFoundError:

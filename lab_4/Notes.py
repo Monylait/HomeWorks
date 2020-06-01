@@ -4,7 +4,7 @@ import Security
 
 def acc_info(way:str,loggin:str):
     try:
-        files_list=os.listdir(way+"\\"+"Notes")
+        files_list=os.listdir(os.path.join(way,"Notes")) #way+"\\"+"Notes"
         print("Loggin - %s\n"% loggin)
         print("Количество заметок - %s\n"% len(files_list))
         print("Ваши заметки:\n")
@@ -28,7 +28,7 @@ def create_notes(way:str,loggin:str):
         flag=True
         while flag:
             try:
-                command=str(input("Enter name for new file with file extension(.txt)"))
+                command=str(input("Enter name for new file with file extension(.txt) "))
                 command=command.replace(' ','_')
                 list=command.split(".")
                 list.reverse()
@@ -43,7 +43,7 @@ def create_notes(way:str,loggin:str):
                     print('Wrong file extension')
             except ValueError:
                 print("Wrong input")
-        way_new=way+"\\"+"Notes"+"\\"+command
+        way_new=os.path.join(way,"Notes",command)#way+"\\"+"Notes"+"\\"+command
         try:
             with open(way_new,'r',encoding='utf-8') as New_Note:
                 print("Note with this name was created later")
@@ -54,7 +54,7 @@ def create_notes(way:str,loggin:str):
             Security.security_files(way,way_new)
             flag_1=False
         except OSError:
-            print("enter correct way pleas")
+            print("enter correct way pleas ")
 
 
 def work_with_notes(way:str,loggin:str):
@@ -79,7 +79,7 @@ def work_with_notes(way:str,loggin:str):
                         print('Wrong file extension')
                 except ValueError:
                     print("Wrong input")
-            way_new=way+"\\"+"Notes"+"\\"+command
+            way_new=os.path.join(way,"Notes",command)#way+"\\"+"Notes"+"\\"+command
             Security.decode_files(way,way_new)
             with open(way_new,'a',encoding='utf-8') as New_Note:
                 print("Open file...")
@@ -105,7 +105,7 @@ def delete_note(way:str,loggin:str):
         list.reverse()
         if list[0]=='txt':
             try:
-                os.remove(way+"\\"+"Notes"+'\\'+command)
+                os.remove(os.path.join(way,"Notes",command))#way+"\\"+"Notes"+'\\'+command)
                 print("Note succesfull delete")
                 flag=False
             except FileNotFoundError:
@@ -117,7 +117,7 @@ def delete_note(way:str,loggin:str):
         else:
             command=command+'.txt'
             try:
-                os.remove(way+'\\'+command)
+                os.remove(os.path.join(way,command))#way+'\\'+command)
                 print("Note sucesfull delete")
                 flag=False
             except FileNotFoundError:
