@@ -87,9 +87,9 @@ while flag:
                         flag=False
                         break
                 else:
-                    print("Wrong input")
+                    print("Wrong input111")
             except ValueError:
-                print("wrong input")
+                print("wrong input 3333")
     except ValueError:
         Security.security_sys_files(os.path.join(path_new,"config_acc.conf")) #path_new+"\\"+"config_acc.conf")
         print("Local error, try please ")

@@ -65,23 +65,23 @@ def CreateAcc(way_for_sys_file:str):
             elif len(new_password)>30:
                 print("Password so big, pleas, create new password")
             elif len(new_password)>1:
-                write_new_acc(loggin,new_password.encode('utf-8'),way)
+                write_new_acc(loggin,new_password,way)#.encode('utf-8')
                 print("Account was succesfull create")
                 try:
                     if not os.path.isdir(os.path.join(way_for_sys_file,loggin)): #way_for_sys_file+"\\"+loggin
                         os.mkdir(os.path.join(way_for_sys_file,loggin))
                 except OSError:
-                    print ("Создать директорию %s не удалось" %path_new )
+                    print ("Создать директорию %s не удалось" %way_for_sys_file )
                 try:
                     if not os.path.isdir(os.path.join(way_for_sys_file,loggin,"Notes")): #way_for_sys_file+"\\"+loggin+"\\"+"Notes"
                         os.mkdir(os.path.join(way_for_sys_file,loggin,"Notes"))
                 except OSError:
-                    print ("Создать директорию %s не удалось" %path_new )
+                    print ("Создать директорию %s не удалось" %way_for_sys_file )
                 try:
                     if not os.path.isdir(os.path.join(way_for_sys_file,loggin,"Keys")): #way_for_sys_file+"\\"+loggin+"\\"+"Keys"
                         os.mkdir(os.path.join(way_for_sys_file,loggin,"Keys"))
                 except OSError:
-                    print ("Создать директорию %s не удалось" %path_new )
+                    print ("Создать директорию %s не удалось" %way_for_sys_file )
                 Security.generate_keys(loggin,os.path.join(way_for_sys_file,loggin,"Keys")) #way_for_sys_file+"\\"+loggin+"\\"+"Keys"
                 flag=False
         except ValueError:

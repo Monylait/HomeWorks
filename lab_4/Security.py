@@ -5,15 +5,15 @@ from Crypto.Random import get_random_bytes
 from Crypto.Cipher import AES, PKCS1_OAEP
 import client_socket as cl_s
 
-def check_password(hashed_password:str, user_password:str)->str:
+def check_password(hashed_password:str, user_password:str):
     password, salt = hashed_password.split(':')
     return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
 
 
-def hash_password(password:str)->str:
+def hash_password(password:str):
     salt ="zakharchenko.dvfu@.ru"
     salt_b=b"zakharchenko.dvfu@.ru"
-    return hashlib.sha256(salt_b + password).hexdigest() + ':' + salt
+    return hashlib.sha256(salt_b + password.encode('utf-8')).hexdigest() + ':' + salt
 
 
 def generate_keys(loggin:str,way:str):
@@ -34,20 +34,20 @@ def generate_keys(loggin:str,way:str):
     security_sys_files(os.path.join(way,'rsa_public.pem')) #way+'\\'+'rsa_public.pem'
 
 def security_files(way:str,name_file:str):
-    data=''
+    data: bytes=b''
     with open(name_file,'rb') as some_file:
         data=some_file.read()
     with open(name_file, 'wb') as out_file:
+
         recipient_key = RSA.import_key(
             cl_s.publick()
         )
-   
         session_key = get_random_bytes(16)
-   
+
         cipher_rsa = PKCS1_OAEP.new(recipient_key)
         out_file.write(cipher_rsa.encrypt(session_key))
-   
-        cipher_aes = AES.new(session_key, AES.MODE_EAX)
+
+        cipher_aes: EaxMode = AES.new(session_key, AES.MODE_EAX)#cipher_aes = AES.new(session_key, AES.MODE_EAX)
         ciphertext, tag = cipher_aes.encrypt_and_digest(data)
    
         out_file.write(cipher_aes.nonce)
@@ -56,7 +56,7 @@ def security_files(way:str,name_file:str):
 
 
 def security_sys_files(name_file:str):
-    data=''
+    data:bytes=b''
     with open(name_file,'rb') as some_file:
         data=some_file.read()
     with open(name_file, 'wb') as out_file:
@@ -68,8 +68,8 @@ def security_sys_files(name_file:str):
    
         cipher_rsa = PKCS1_OAEP.new(recipient_key)
         out_file.write(cipher_rsa.encrypt(session_key))
-   
-        cipher_aes = AES.new(session_key, AES.MODE_EAX)
+
+        cipher_aes: EaxMode = AES.new(session_key, AES.MODE_EAX)#cipher_aes = AES.new(session_key, AES.MODE_EAX)
         ciphertext, tag = cipher_aes.encrypt_and_digest(data)
    
         out_file.write(cipher_aes.nonce)
@@ -92,8 +92,8 @@ def decode_files(way:str,name_file:str):
       
         cipher_rsa = PKCS1_OAEP.new(private_key)
         session_key = cipher_rsa.decrypt(enc_session_key)
-      
-        cipher_aes = AES.new(session_key, AES.MODE_EAX, nonce)
+
+        cipher_aes: EaxMode = AES.new(session_key, AES.MODE_EAX,nonce)#cipher_aes = AES.new(session_key, AES.MODE_EAX, nonce)
         data = cipher_aes.decrypt_and_verify(ciphertext, tag)
     with open(name_file,'wb') as out_file:
         out_file.write(data)
@@ -113,8 +113,8 @@ def decode_sys_files(name_file:str):
       
         cipher_rsa = PKCS1_OAEP.new(private_key)
         session_key = cipher_rsa.decrypt(enc_session_key)
-      
-        cipher_aes = AES.new(session_key, AES.MODE_EAX, nonce)
+
+        cipher_aes: EaxMode = AES.new(session_key, AES.MODE_EAX,nonce)#cipher_aes = AES.new(session_key, AES.MODE_EAX, nonce)
         data = cipher_aes.decrypt_and_verify(ciphertext, tag)
     with open(name_file,'wb') as out_file:
         out_file.write(data)
