@@ -107,8 +107,7 @@ def monitor():
 
 
 if __name__ == '__main__':
-    limit = 100000000 #1000k 1.5s
-  #  limit = int(input("Введите верхний лимит ваших вычислений:"))
+    limit = int(input("Введите верхний лимит ваших вычислений:"))
    # moni=multiprocessing.Process(target=monitor)
   #  moni.start()
     a=timeit.default_timer()
