@@ -18,39 +18,53 @@ def Atkins(limiit:int,s1:int,s2:int,s3:int):
         way="first.txt"
         status="1"
         print(i," ",limits)
+        check=0
         for x in range(i,int(limits)+1):
             for y in range(i,int(limits)+1):
                 n = 4*int(pow(x,2)) + int(pow(y,2))
                 if n<=limiit and (n%12==1 or n%12==5): 
-                    sieve[n] = 1 
+                    sieve[n]= 1
+                    if check==100:
+                        print (x,y,status)
+                        check=0
+                    check+=1
     elif s2==1:
         limits=limiit
         i=1
         way="second.txt"
         status="2"
         print(i," ",limits)
+        check=0
         for x in range(i,int(limits)+1):
             for y in range(i,int(limits)+1):
                 n =3*int(pow(x,2)) + int(pow(y,2))
                 if n<= limiit and n%12==7: 
                     sieve[n] = 1 
+                    if check==100:
+                        print (x,y,status)
+                        check=0
+                    check+=1
     elif s3==1:
         limits=limiit
         i=1
         way="third.txt"
         status="3"
         print(i," ",limits)
+        check=0
         for x in range(i,int(limits)+1):
             for y in range(i,int(limits)+1):
                 n =3*int(pow(x,2)) - int(pow(y,2))
                 if x>y and n<=limiit and n%12==11: 
                     sieve[n] = 1 
+                    if check==100:
+                        print (x,y,status)
+                        check=0
+                    check+=1
 
     for x in range(5,int(limiit)):
         if sieve[x] is 1:
             k=int(pow(x,2))
             for y in range(k,limiit+1,k):
-                print("y ",y)
                 sieve[y] = 0
     print(status)
     with open(way,"w",encoding='utf-7') as first:
@@ -75,7 +89,6 @@ def read(way:str):
             else:
                 new_i=int(i)
                 if second_list.count(new_i)==0:
-                    print (id)
                     second_list[id]=new_i
     return second_list
 
