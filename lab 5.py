@@ -122,7 +122,7 @@ def enter():
 
 if __name__ == '__main__':
     flag=False
-    limit=argv[1]
+    limit=int(argv[1])
     a=timeit.default_timer()
     starts(limit)
     first_list=list()
