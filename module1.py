@@ -10,47 +10,93 @@ from tkinter import END
 from tkinter import HORIZONTAL
 from tkinter import ttk
 from tkinter.ttk import Combobox
+import datetime
+
+
+
+def read_csv_login(login,file):
+    list_row=list()
+    i=0
+    with open(file) as f:
+       reader = csv.reader(f)
+       for row in reader:
+           if i>0 and row[3]==login:
+               rows=str()
+               check=0
+               for j in row:
+                   if check==0:
+                       rows=rows+j
+                       check+=1
+                   else:
+                       rows=rows+","+j
+               rows=rows+"\n"
+               list_row.append(rows)
+           elif i==0: 
+               start_row=row
+               i+=1
+           else:pass
+    p=list()
+    p.append(list_row)
+    p.append(start_row)
+    return list_row
+
+
+def read_csv(start,stop,file):
+    list_row=list()
+    i=0
+    with open(file) as f:
+       reader = csv.reader(f)
+       print(start,stop)
+       for row in reader:
+           if i>0 and int(row[0])>=stop and int(row[1])<=start:
+               rows=str()
+               check=0
+               for j in row:
+                   if check==0:
+                       rows=rows+j
+                       check+=1
+                   else:
+                       rows=rows+","+j
+               rows=rows+"\n"
+               list_row.append(rows)
+           elif i==0: 
+               start_row=row
+               i+=1
+           else:pass
+    p=list()
+    p.append(list_row)
+    p.append(start_row)
+    return list_row
+
 
 class GUI():
 
 
-    def antiproblem(self):
+    def antiproblem(self):  
         login=self.login
         file=self.file
         with mp.Pool(processes=1) as my_pool:
-            self.p1=my_pool.starmap(self.read_csv_login,
+            self.p1=my_pool.starmap(read_csv_login,
                                     iterable=[
                                               [login,file]
                                              ]
-                                    )
-            my_pool.close
+                                    ) 
 
+        pass
 
-    def read_csv_login(self):
-        self.list_row=list()
-        i=0
-        with open(self.file) as f:
-           reader = csv.reader(f)
-           for row in reader:
-               if i>0 and row[3]==self.login:
-                   rows=str()
-                   check=0
-                   for j in row:
-                       if check==0:
-                           rows=rows+j
-                           check+=1
-                       else:
-                           rows=rows+","+j
-                   rows=rows+"\n"
-                   self.list_row.append(rows)
-               elif i==0: 
-                   self.start_row=row
-                   i+=1
-               else:pass
-        p=list()
-        p.append(self.list_row)
-        p.append(self.start_row)
-        return p
+    def antiproblem_2(self):  
+        start=int(self.start)
+        stop=int(self.stop)
+        file=self.file
+        with mp.Pool(processes=1) as my_pool:
+            self.p1=my_pool.starmap(read_csv,
+                                    iterable=[
+                                              [start,stop,file]
+                                             ]
+                                    ) 
+        
+        pass
+        
 
 
     def read_csv_Time(self,):
@@ -125,30 +171,30 @@ class GUI():
                 l.destroy()
         lbl=Label(self.win,text="Введите временной диапазон в формате c ДД ММ ГГ ЧЧ ММ СС по ДД ММ ГГ ЧЧ ММ СС",justify=CENTER)
         lbl.grid(row=0,columnspan=70)
-        self.day = Entry(self.win, width=10)
-        self.day.grid(column=1,row=1)
-        self.month = Entry(self.win, width=10)
-        self.month.grid(column=2,row=1)
-        self.year = Entry(self.win, width=10)
-        self.year.grid(column=3,row=1)
-        self.hour = Entry(self.win, width=10)
-        self.hour.grid(column=4,row=1)
-        self.min = Entry(self.win, width=10)
-        self.min.grid(column=5,row=1)
-        self.sec = Entry(self.win, width=10)
-        self.sec.grid(column=6,row=1)
-        self.day_1 = Entry(self.win, width=10)
-        self.day_1.grid(column=1,row=2)
-        self.month_1 = Entry(self.win, width=10)
-        self.month_1.grid(column=2,row=2)
-        self.year_1 = Entry(self.win, width=10)
-        self.year_1.grid(column=3,row=2)
-        self.hour_1 = Entry(self.win, width=10)
-        self.hour_1.grid(column=4,row=2)
-        self.min_1 = Entry(self.win, width=10)
-        self.min_1.grid(column=5,row=2)
-        self.sec_1 = Entry(self.win, width=10)
-        self.sec_1.grid(column=6,row=2)
+        self.day_1_1 = Entry(self.win, width=10)
+        self.day_1_1.grid(column=1,row=1)
+        self.month_1_1 = Entry(self.win, width=10)
+        self.month_1_1.grid(column=2,row=1)
+        self.year_1_1 = Entry(self.win, width=10)
+        self.year_1_1.grid(column=3,row=1)
+        self.hour_1_1 = Entry(self.win, width=10)
+        self.hour_1_1.grid(column=4,row=1)
+        self.min_1_1 = Entry(self.win, width=10)
+        self.min_1_1.grid(column=5,row=1)
+        self.sec_1_1 = Entry(self.win, width=10)
+        self.sec_1_1.grid(column=6,row=1)
+        self.day_2 = Entry(self.win, width=10)
+        self.day_2.grid(column=1,row=2)
+        self.month_2 = Entry(self.win, width=10)
+        self.month_2.grid(column=2,row=2)
+        self.year_2 = Entry(self.win, width=10)
+        self.year_2.grid(column=3,row=2)
+        self.hour_2 = Entry(self.win, width=10)
+        self.hour_2.grid(column=4,row=2)
+        self.min_2 = Entry(self.win, width=10)
+        self.min_2.grid(column=5,row=2)
+        self.sec_2 = Entry(self.win, width=10)
+        self.sec_2.grid(column=6,row=2)
         lbl_2=Label(self.win,text="Enter way to file")
         lbl_2.grid(column=0,row=3)
         self.lbl_3=Label(self.win,text="File way...")
@@ -161,7 +207,7 @@ class GUI():
         self.combo['values'] = (10, 20, 30)  
         self.combo.current(0)
         self.combo.grid(column=1, row=5)
-        submit_txt=Button(self.win, text="next", name="next", command=self.check_param)
+        submit_txt=Button(self.win, text="next", name="next", command=self.check_param_2)
         submit_txt.grid(column=0,row=6)
 
 
@@ -190,23 +236,71 @@ class GUI():
             
     def check_param_2(self):
         Errors=0
-        self.day=self.day.get()
-        self.day=self.day.get()
-        if len(self.login)<1:
-            Errors+=1
-        self.rows=int(self.combo.get())
-        if self.rows==10 or self.rows==20 or self.rows==30:
-            pass
-        else: 
-            messagebox.showinfo('Rows', 'обосрався')
-            Errors+=1
-        if  self.file!=None:
-            pass
-        else: 
-            messagebox.showinfo('Way', 'обосрався')
+        self.day_1=self.day_1_1.get()
+        self.month_1=self.month_1_1.get()
+        self.year_1=self.year_1_1.get()
+        self.hour_1=self.hour_1_1.get()
+        self.min_1=self.min_1_1.get()
+        self.sec_1=self.sec_1_1.get()
+        self.day_2=self.day_2.get()
+        self.month_2=self.month_2.get()
+        self.year_2=self.year_2.get()
+        self.hour_2=self.hour_2.get()
+        self.min_2=self.min_2.get()
+        self.sec_2=self.sec_2.get()
+        try:
+            if int(self.day_1)<31 and int(self.day_1)>0 and int(self.day_2)<31 and int(self.day_2)>0:
+                pass
+            else:
+                messagebox.showinfo('Days', 'обосрався')
+            if int(self.month_1)<13 and int(self.month_1)>0 and int(self.month_2)<13 and int(self.month_2)>0:
+                pass
+            else:
+                messagebox.showinfo('Month', 'обосрався')
+            if int(self.year_1)<3000 and int(self.year_1)>1969 and int(self.year_2)<3000 and int(self.year_2)>1969 and int(self.year_1)>=int(self.year_2):
+                pass
+            else:
+                messagebox.showinfo('Years', 'обосрався')
+            if int(self.hour_1)<25 and int(self.hour_1)>-1 and int(self.hour_2)<25 and int(self.hour_2)>-1:
+                pass
+            else:
+                messagebox.showinfo('Hours', 'обосрався')
+            if int(self.min_1)<60 and int(self.min_1)>-1 and int(self.min_2)<60 and int(self.min_2)>-1:
+                pass
+            else:
+                messagebox.showinfo('Mins', 'обосрався')
+            if int(self.sec_1)<60 and int(self.sec_1)>-1 and int(self.sec_2)<60 and int(self.sec_2)>-1:
+                pass
+            else:
+                messagebox.showinfo('Secs', 'обосрався')
+            self.rows=int(self.combo.get())
+            if self.rows==10 or self.rows==20 or self.rows==30:
+                pass
+            else: 
+                messagebox.showinfo('Rows', 'обосрався')
+                Errors+=1
+            if  self.file!=None:
+                pass
+            else: 
+                messagebox.showinfo('Way', 'обосрався')
+                Errors+=1
+        except Exception:
+            messagebox.showinfo('Problem with time', 'обосрався')
             Errors+=1
         if Errors==0:
-            self.finish_click_2()
+            print("lol")
+            check_1=datetime.datetime(int(self.year_1),int(self.month_1),int(self.day_1), int(self.hour_1),int(self.min_1),int(self.sec_1))
+            check_2=datetime.datetime(int(self.year_2),int(self.month_2),int(self.day_2), int(self.hour_2),int(self.min_2),int(self.sec_2))
+            self.start=datetime.datetime(int(self.year_1),int(self.month_1),int(self.day_1), int(self.hour_1),int(self.min_1),int(self.sec_1)).utctimestamp()
+            self.stop=datetime.datetime(int(self.year_2),int(self.month_2),int(self.day_2), int(self.hour_2),int(self.min_2),int(self.sec_2)).utctimestamp()
+            print(check_1,self.start)
+            print(check_2,self.stop)
+            if self.start<self.stop:
+                messagebox.showinfo('Data wrong - start<stop', 'обосрався')
+                Errors+=1
+            if Errors==0:
+                self.finish_click_2()
+
 
     def clicked_3(self):
         messagebox.showinfo('функция', 'более не поддерживается')
@@ -234,7 +328,24 @@ class GUI():
 
 
     def finish_click_2(self):
-        messagebox.showinfo('функция', 'более не поддерживается')
+        lst=self.win.grid_slaves()
+        for l in lst:
+            l.destroy()
+        self.antiproblem_2()
+        self.rowrows=0
+        self.num=1
+        self.list_row=self.p1[0]
+        print(self.list_row)                   #не записывает ничего 
+        ttk.Button(self.win, text='Вывести выбранное количество сессий',command=self.output).pack()
+        ttk.Separator(self.win, orient=HORIZONTAL).pack(fill=BOTH)  # line in-between
+        self.console = scrolledtext.ScrolledText(self.win,width=1360, state="disabled")
+        self.console.pack()
+        back=Button(self.win, text="back in menu", name="back", command=self.back_in_menu)
+        back.pack()
+        self.save=True
+        if self.save!=False:
+            back=Button(self.win, text="save result", command=self.save_result)
+            back.pack()
 
     def output(self):
         self.console.configure(state='normal')
@@ -270,10 +381,12 @@ class GUI():
         lst=self.win.grid_slaves()
         for l in lst:
             l.destroy()
-        self.read_csv_login()
+        #self.read_csv_login()
+        self.antiproblem()
         self.rowrows=0
         self.num=1
-        print(len(self.list_row))
+        self.list_row=self.p1[0]
+        print(self.list_row)
         ttk.Button(self.win, text='Вывести выбранное количество сессий',command=self.output).pack()
         ttk.Separator(self.win, orient=HORIZONTAL).pack(fill=BOTH)  # line in-between
         self.console = scrolledtext.ScrolledText(self.win,width=1360, state="disabled")
@@ -285,9 +398,9 @@ class GUI():
             back=Button(self.win, text="save result", command=self.save_result)
             back.pack()
 
-
-obj4=GUI()
-obj4.Start_Win()
-
+if __name__=="__main__":
+    obj4=GUI()
+    obj4.Start_Win()
+     
 #скролбара нет, когда водится дохуя строк все летит по пизде. Сделать не бесконечное нажатие строк - снять блокировку
 #процесс для подгрузки лабы
