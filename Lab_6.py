@@ -11,61 +11,82 @@ from tkinter import HORIZONTAL
 from tkinter import ttk
 from tkinter.ttk import Combobox
 import datetime
-
+from tkinter import filedialog
 
 
 def read_csv_login(login,file):
     list_row=list()
-    i=0
-    with open(file) as f:
-       reader = csv.reader(f)
-       for row in reader:
-           if i>0 and row[3]==login:
-               rows=str()
-               check=0
-               for j in row:
-                   if check==0:
-                       rows=rows+j
-                       check+=1
-                   else:
-                       rows=rows+","+j
-               rows=rows+"\n"
-               list_row.append(rows)
-           elif i==0: 
-               start_row=row
-               i+=1
-           else:pass
+    time_list=list()
+    for file_from_directory in file:
+        i=0
+        #time_list=list()
+        start_row=''
+        with open(file_from_directory) as f:
+           reader = csv.reader(f)
+           checks=0
+           for row in reader:
+               if checks>0 and row[3]==login:
+                   rows=str()
+                   check=0
+                   for j in row:
+                       if check==0:
+                           rows=rows+j
+                           check+=1
+                       else:
+                           rows=rows+","+j
+                   rows=rows+"\n"
+                   time_list.append(rows)
+               elif checks==0: 
+                   for j in row:
+                       if checks==0:
+                           start_row=start_row+j
+                           checks+=1
+                       else:
+                           start_row=start_row+","+j
+                   start_row=start_row+"\n"
+                   time_list.append(start_row)
+               else:pass
+        list_row.append(time_list)
     p=list()
-    p.append(list_row)
-    p.append(start_row)
+    p.append(time_list)
     return p
 
 
 def read_csv(start,stop,file):
     list_row=list()
-    i=0
-    with open(file) as f:
-       reader = csv.reader(f)
-       print(start,stop)
-       for row in reader:
-           if i>0 and int(row[0])>=stop and int(row[1])<=start:
-               rows=str()
-               check=0
-               for j in row:
-                   if check==0:
-                       rows=rows+j
-                       check+=1
-                   else:
-                       rows=rows+","+j
-               rows=rows+"\n"
-               list_row.append(rows)
-           elif i==0: 
-               start_row=row
-               i+=1
-           else:pass
+    time_list=list()
+    for file_from_directory in file:
+        i=0
+        #time_list=list()
+        start_row=''
+        with open(file_from_directory) as f:
+           reader = csv.reader(f)
+           checks=0
+           for row in reader:
+               if checks>0 and int(row[0])>=stop and int(row[1])<=start:
+                   rows=str()
+                   check=0
+                   for j in row:
+                       if check==0:
+                           rows=rows+j
+                           check+=1
+                       else:
+                           rows=rows+","+j
+                   rows=rows+"\n"
+                   time_list.append(rows)
+               elif checks==0: 
+                   for j in row:
+                       if check==0:
+                           start_row=start_row+j
+                           check+=1
+                       else:
+                           start_row=start_row+","+j
+                   start_row=start_row+"\n"
+                   time_list.append(start_row)
+               else:pass
+        list_row.append(time_list)
     p=list()
-    p.append(list_row)
-    p.append(start_row)
+    p.append(time_list)
     return p
 
 
@@ -133,7 +154,7 @@ class GUI():
 
 
     def clicked_1(self):
-        self.file=None
+        self.file=list()
         lst=self.win.grid_slaves()
         for l in lst:
             if l.winfo_name()=='btn_2' or l.winfo_name()=='btn_1':
@@ -159,7 +180,7 @@ class GUI():
 
 
     def clicked_2(self):
-        self.file=None
+        self.file=list()
         lst=self.win.grid_slaves()
         for l in lst:
             if l.winfo_name()=='btn_2' or l.winfo_name()=='btn_3' or l.winfo_name()=='btn_1':
@@ -237,34 +258,34 @@ class GUI():
         self.hour_1=self.hour_1_1.get()
         self.min_1=self.min_1_1.get()
         self.sec_1=self.sec_1_1.get()
-        self.day_2=self.day_2.get()
-        self.month_2=self.month_2.get()
-        self.year_2=self.year_2.get()
-        self.hour_2=self.hour_2.get()
-        self.min_2=self.min_2.get()
-        self.sec_2=self.sec_2.get()
+        self.day_2_1=self.day_2.get()
+        self.month_2_1=self.month_2.get()
+        self.year_2_1=self.year_2.get()
+        self.hour_2_1=self.hour_2.get()
+        self.min_2_1=self.min_2.get()
+        self.sec_2_1=self.sec_2.get()
         try:
-            if int(self.day_1)<31 and int(self.day_1)>0 and int(self.day_2)<31 and int(self.day_2)>0:
+            if int(self.day_1)<31 and int(self.day_1)>0 and int(self.day_2_1)<31 and int(self.day_2_1)>0:
                 pass
             else:
                 messagebox.showinfo('Days', 'обосрався')
-            if int(self.month_1)<13 and int(self.month_1)>0 and int(self.month_2)<13 and int(self.month_2)>0:
+            if int(self.month_1)<13 and int(self.month_1)>0 and int(self.month_2_1)<13 and int(self.month_2_1)>0:
                 pass
             else:
                 messagebox.showinfo('Month', 'обосрався')
-            if int(self.year_1)<3000 and int(self.year_1)>1969 and int(self.year_2)<3000 and int(self.year_2)>1969 and int(self.year_1)>=int(self.year_2):
+            if int(self.year_1)<3000 and int(self.year_1)>1969 and int(self.year_2_1)<3000 and int(self.year_2_1)>1969 and int(self.year_1)>=int(self.year_2_1):
                 pass
             else:
                 messagebox.showinfo('Years', 'обосрався')
-            if int(self.hour_1)<25 and int(self.hour_1)>-1 and int(self.hour_2)<25 and int(self.hour_2)>-1:
+            if int(self.hour_1)<25 and int(self.hour_1)>-1 and int(self.hour_2_1)<25 and int(self.hour_2_1)>-1:
                 pass
             else:
                 messagebox.showinfo('Hours', 'обосрався')
-            if int(self.min_1)<60 and int(self.min_1)>-1 and int(self.min_2)<60 and int(self.min_2)>-1:
+            if int(self.min_1)<60 and int(self.min_1)>-1 and int(self.min_2_1)<60 and int(self.min_2_1)>-1:
                 pass
             else:
                 messagebox.showinfo('Mins', 'обосрався')
-            if int(self.sec_1)<60 and int(self.sec_1)>-1 and int(self.sec_2)<60 and int(self.sec_2)>-1:
+            if int(self.sec_1)<60 and int(self.sec_1)>-1 and int(self.sec_2_1)<60 and int(self.sec_2_1)>-1:
                 pass
             else:
                 messagebox.showinfo('Secs', 'обосрався')
@@ -284,10 +305,18 @@ class GUI():
             Errors+=1
         if Errors==0:
             print("lol")
-            check_1=datetime.datetime(int(self.year_1),int(self.month_1),int(self.day_1), int(self.hour_1),int(self.min_1),int(self.sec_1))
-            check_2=datetime.datetime(int(self.year_2),int(self.month_2),int(self.day_2), int(self.hour_2),int(self.min_2),int(self.sec_2))
+            #self.hour_1=self.hour_1+10
+            #self.hour_2_1=self.hour_2_1+10
+            #if self.hour_1%24!=0:
+            #    p=self.hour_1%24
+            #    self.hour_1=p
+            #    self.day_1+=1
+            #if self.hour_2_1%24!=0:
+            #    p=self.hour_2_1%24
+            #    self.hour_2_1=p
+            #    self.day_2_1+=1
             self.start=datetime.datetime(int(self.year_1),int(self.month_1),int(self.day_1), int(self.hour_1),int(self.min_1),int(self.sec_1)).timestamp()
-            self.stop=datetime.datetime(int(self.year_2),int(self.month_2),int(self.day_2), int(self.hour_2),int(self.min_2),int(self.sec_2)).timestamp()
+            self.stop=datetime.datetime(int(self.year_2_1),int(self.month_2_1),int(self.day_2_1), int(self.hour_2_1),int(self.min_2_1),int(self.sec_2_1)).timestamp()
             if self.start<self.stop:
                 messagebox.showinfo('Data wrong - start<stop', 'обосрався')
                 Errors+=1
@@ -296,19 +325,31 @@ class GUI():
 
 
     def way_file(self):
-        self.file = filedialog.askopenfilename(filetypes = (("TXT files", "*.txt"),
-                                                      ("HTML files", "*.html;*.htm"),
-                                                      ("All files", "*.*") ))
-        self.file_test=self.file.split(".")
-        flag=True
-        print(self.file)
-        while flag:
-            if self.file_test[-1]!="csv":
-                    self.file = filedialog.askopenfilename(filetypes = (("TXT files", "*.txt"),
-                                                          ("HTML files", "*.html;*.htm"),
-                                                          ("All files", "*.*") ))
-            else: flag=False
-        self.lbl_3.configure(text=self.file)
+        directory=filedialog.askdirectory()
+        file=os.listdir(directory)
+        j=0
+        print(directory,file)
+        for i in file:
+            j=i.split(".")
+            if j[-1]=="csv":
+                self.file.append(i)
+        if len(file)<1:
+            messagebox.showinfo('Havent files', 'обосрався')
+        else: 
+            self.lbl_3.configure(text="we have directory and see files")
+        #self.file = filedialog.askopenfilename(filetypes = (("TXT files", "*.txt"),
+        #                                              ("HTML files", "*.html;*.htm"),
+        #                                              ("All files", "*.*") ))
+        #self.file_test=self.file.split(".")
+        #flag=True
+        #print(self.file)
+        #while flag:
+        #    if self.file_test[-1]!="csv":
+        #            self.file = filedialog.askopenfilename(filetypes = (("TXT files", "*.txt"),
+        #                                                  ("HTML files", "*.html;*.htm"),
+        #                                                  ("All files", "*.*") ))
+        #    else: flag=False
+        #self.lbl_3.configure(text=self.file)
 
 
     def finish_click_2(self):
@@ -320,7 +361,6 @@ class GUI():
         self.num=1
         p=self.p1[0] 
         self.list_row=p[0]
-        self.start_row=p[1] 
         ttk.Button(self.win, text='Вывести выбранное количество сессий',command=self.output).pack()
         ttk.Separator(self.win, orient=HORIZONTAL).pack(fill=BOTH)  
         self.console = scrolledtext.ScrolledText(self.win,width=1360, state="disabled")
@@ -369,10 +409,8 @@ class GUI():
         self.antiproblem()
         self.rowrows=0
         self.num=1
-        print(self.p1)
         p=self.p1[0]
         self.list_row=p[0]
-        self.start_row=p[1]
         ttk.Button(self.win, text='Вывести выбранное количество сессий',command=self.output).pack()
         ttk.Separator(self.win, orient=HORIZONTAL).pack(fill=BOTH)
         self.console = scrolledtext.ScrolledText(self.win,width=1360, state="disabled")
