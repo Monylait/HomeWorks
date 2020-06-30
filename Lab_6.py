@@ -164,7 +164,7 @@ class GUI():
         for l in lst:
             if l.winfo_name()=='btn_2' or l.winfo_name()=='btn_3' or l.winfo_name()=='btn_1':
                 l.destroy()
-        lbl=Label(self.win,text="Введите временной диапазон в формате c ДД ММ ГГ ЧЧ ММ СС по ДД ММ ГГ ЧЧ ММ СС",justify=CENTER)
+        lbl=Label(self.win,text="Введите временной диапазон в формате до ДД ММ ГГ ЧЧ ММ СС с ДД ММ ГГ ЧЧ ММ СС",justify=CENTER)
         lbl.grid(row=0,columnspan=70)
         self.day_1_1 = Entry(self.win, width=10)
         self.day_1_1.grid(column=1,row=1)
