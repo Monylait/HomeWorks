@@ -73,35 +73,45 @@ def read_csv(login:str,file:list,start:int,stop:int,status:int)->list:
                                 start_row=start_row+"\n"
                                 time_list.append(start_row)
                         except Exception:
-                            print("Error")
-        list_row.append(time_list)
+                            messagebox.showinfo("Сейчас обрабатывается", file_from_directory)
+        list_row=list_row+time_list
     p=list()
     p.append(list_row)
     p1=list()
     p1.append(p)
-    print("LOH",p)
-    return p
+    print(p)
+    return p1
 
 
-async def antiproblem(status,login,file,start,stop): 
-        print("antiproblem")
-        if status==1:
-            log=login
-            fil=file
-            star=0
-            sto=0
-        if status==2:
-            log=""
-            fil=file
-            star=int(start)
-            sto=int(stop)
-        with mp.Pool(processes=1) as my_pool:
-            p1=my_pool.starmap(read_csv,
-                                    iterable=[
-                                              [log,fil,star,sto,status]
-                                             ]
-                                    ) 
-        return p1
+def save_result(list_row):
+    text=""
+    text=text+"\n"
+    with open("result.csv","w") as file:
+        for i in list_row:
+            text=text+i
+        file.write(text)
+    messagebox.showinfo("Успех", "Успешно сохранено в файле result.csv")
+
+
+#async def antiproblem(status,login,file,start,stop): 
+#        print("antiproblem")
+#        if status==1:
+#            log=login
+#            fil=file
+#            star=0
+#            sto=0
+#        if status==2:
+#            log=""
+#            fil=file
+#            star=int(start)
+#            sto=int(stop)
+#        with mp.Pool(processes=1) as my_pool:
+#            p1=my_pool.starmap(read_csv,
+#                                    iterable=[
+#                                              [log,fil,star,sto,status]
+#                                             ]
+#                                    ) 
+#        return p1
         
 
 
@@ -109,6 +119,7 @@ class GUI():
 
     def __init__(self):
         self.my_pool=mp.Pool(1)
+        self.my_pool_save=mp.Pool(1)
 
     def back_in_menu(self):
         lst=self.win.grid_slaves()
@@ -120,6 +131,7 @@ class GUI():
 
 
     def Start_Win(self):
+        self.list_check=0
         self.list_row=list()
         self.win=Tk()
         self.win.title("Lab_6")
@@ -247,49 +259,49 @@ class GUI():
         self.sec_2_1=self.sec_2.get()
         time=0
         func_start=0
-        #try:
-        if int(self.day_1)<31 and int(self.day_1)>0 and int(self.day_2_1)<31 and int(self.day_2_1)>0:
-            time+=1
-        else:
-            messagebox.showinfo('Days', 'incorrect')
-        if int(self.month_1)<13 and int(self.month_1)>0 and int(self.month_2_1)<13 and int(self.month_2_1)>0:
-            time+=1
-        else:
-            messagebox.showinfo('Month', 'incorrect')
-        if int(self.year_1)<3000 and int(self.year_1)>1969 and int(self.year_2_1)<3000 and int(self.year_2_1)>1969 and int(self.year_1)>=int(self.year_2_1):
-            time+=1
-        else:
-            messagebox.showinfo('Years', 'incorrect')
-        if int(self.hour_1)<25 and int(self.hour_1)>-1 and int(self.hour_2_1)<25 and int(self.hour_2_1)>-1:
-            time+=1
-        else:
-            messagebox.showinfo('Hours', 'incorrect')
-        if int(self.min_1)<60 and int(self.min_1)>-1 and int(self.min_2_1)<60 and int(self.min_2_1)>-1:
-            time+=1
-        else:
-            messagebox.showinfo('Mins', 'incorrect')
-        if int(self.sec_1)<60 and int(self.sec_1)>-1 and int(self.sec_2_1)<60 and int(self.sec_2_1)>-1:
-            time+=1
-        else:
-            messagebox.showinfo('Secs', 'incorrect')
-        self.rows=int(self.combo.get())
-        if time==6:
-            self.start=datetime.datetime(int(self.year_1),int(self.month_1),int(self.day_1), int(self.hour_1),int(self.min_1),int(self.sec_1)).timestamp()
-            self.stop=datetime.datetime(int(self.year_2_1),int(self.month_2_1),int(self.day_2_1), int(self.hour_2_1),int(self.min_2_1),int(self.sec_2_1)).timestamp()
-        if self.rows==10 or self.rows==20 or self.rows==30:
-            pass
-        else: 
-            messagebox.showinfo('Rows', 'incorrect')
+        try:
+            if int(self.day_1)<31 and int(self.day_1)>0 and int(self.day_2_1)<31 and int(self.day_2_1)>0:
+                time+=1
+            else:
+                messagebox.showinfo('Days', 'incorrect')
+            if int(self.month_1)<13 and int(self.month_1)>0 and int(self.month_2_1)<13 and int(self.month_2_1)>0:
+                time+=1
+            else:
+                messagebox.showinfo('Month', 'incorrect')
+            if int(self.year_1)<3000 and int(self.year_1)>1969 and int(self.year_2_1)<3000 and int(self.year_2_1)>1969 and int(self.year_1)>=int(self.year_2_1):
+                time+=1
+            else:
+                messagebox.showinfo('Years', 'incorrect')
+            if int(self.hour_1)<25 and int(self.hour_1)>-1 and int(self.hour_2_1)<25 and int(self.hour_2_1)>-1:
+                time+=1
+            else:
+                messagebox.showinfo('Hours', 'incorrect')
+            if int(self.min_1)<60 and int(self.min_1)>-1 and int(self.min_2_1)<60 and int(self.min_2_1)>-1:
+                time+=1
+            else:
+                messagebox.showinfo('Mins', 'incorrect')
+            if int(self.sec_1)<60 and int(self.sec_1)>-1 and int(self.sec_2_1)<60 and int(self.sec_2_1)>-1:
+                time+=1
+            else:
+                messagebox.showinfo('Secs', 'incorrect')
+            self.rows=int(self.combo.get())
+            if time==6:
+                self.start=datetime.datetime(int(self.year_1),int(self.month_1),int(self.day_1), int(self.hour_1),int(self.min_1),int(self.sec_1)).timestamp()
+                self.stop=datetime.datetime(int(self.year_2_1),int(self.month_2_1),int(self.day_2_1), int(self.hour_2_1),int(self.min_2_1),int(self.sec_2_1)).timestamp()
+            if self.rows==10 or self.rows==20 or self.rows==30:
+                pass
+            else: 
+                messagebox.showinfo('Rows', 'incorrect')
+                Errors+=1
+            if  self.file!=None and time==6:
+                self.my_pool.apply_async(func=read_csv,args=("",self.file,self.start,self.stop,2),callback=self.table_data) 
+                func_start=1
+            else: 
+                messagebox.showinfo('Way', 'incorrect')
+                Errors=1         
+        except Exception:
+            messagebox.showinfo('Problem with time', 'incorrect')
             Errors+=1
-        if  self.file!=None and time==6:
-            self.my_pool.apply_async(func=read_csv,args=("",self.file,self.start,self.stop,2),callback=self.table_data) 
-            func_start=1
-        else: 
-            messagebox.showinfo('Way', 'incorrect')
-            Errors=1         
-        #except Exception:
-        #    messagebox.showinfo('Problem with time', 'incorrect')
-        #    Errors+=1
         if Errors==0 and func_start==1:
             if self.start<self.stop:
                 messagebox.showinfo('Data wrong - start<stop', 'incorrect')
@@ -319,11 +331,9 @@ class GUI():
         p1=p[0] 
         self.list_row=p1[0]
         self.list_check=1
-        print(p,"----------------------",p1[0])
 
 
     def output(self):
-        print(self.list_check)
         if len(self.list_row)>0 and len(self.list_row)<self.rows:
             self.console.configure(state='normal')
             text=''
@@ -350,38 +360,33 @@ class GUI():
             self.console.yview(END)
 
 
-    def save_result(self):
-        text=""
-        check=0
-        text=text+"\n"
-        with open("result.csv","w") as file:
-            for i in self.list_row:
-                text=text+i
-            file.write(text)
-        lst=self.win.grid_slaves()
+    def try_save(self):
+        if self.list_check==1:
+            self.my_pool_save.apply_async(func=save_result,args=(self.list_row)) 
+        else:
+            messagebox.showinfo('Сant save', 'We not finished read files,pleas wait')
+
 
     def finish_click(self,status):
         lst=self.win.grid_slaves()
         for l in lst:
             l.destroy()
-        #self.antiproblem(status)
         self.rowrows=0
         self.num=1
-        #p=self.p1[0]
-        #self.list_row=p[0]
         ttk.Button(self.win, text='Вывести выбранное количество сессий',command=self.output).pack()
         ttk.Separator(self.win, orient=HORIZONTAL).pack(fill=BOTH)
         self.console = scrolledtext.ScrolledText(self.win,width=1360, state="disabled")
         self.console.pack()
         back=Button(self.win, text="back in menu", name="back", command=self.back_in_menu)
         back.pack()
-        back=Button(self.win, text="save result",name="save", command=self.save_result)
+        back=Button(self.win, text="save result",name="save", command=self.try_save)
         back.pack()
 
 
 if __name__ == "__main__":
     obj4=GUI()
     obj4.Start_Win()
+
 
 
 
