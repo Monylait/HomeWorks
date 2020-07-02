@@ -19,12 +19,13 @@ def read_csv(login:str,file:list,start:int,stop:int,status:int)->list:
     list_row=list()
     time_list=list()
     first_row=0
+    print(status)
     for file_from_directory in file:
         start_row=""
         with open(file_from_directory) as f:
             time_list=list()
             reader = csv.reader(f)
-            for row in reader:
+            for row in reader: 
                     if status==1:
                         try:
                             if first_row>0 and row[3]==login:
@@ -32,27 +33,26 @@ def read_csv(login:str,file:list,start:int,stop:int,status:int)->list:
                                 first_ellem=0
                                 for j in row:
                                     if first_ellem==0:
-                                        rows=rows+j
+                                        rows=rows+str(j)
                                         first_ellem+=1
                                     else:
-                                        rows=rows+","+j
+                                        rows=rows+","+str(j)
                                 rows=rows+"\n"
                                 time_list.append(rows)
                             elif first_row==0: 
                                 for j in row:
                                     if first_row==0:
-                                        start_row=start_row+j
+                                        start_row=start_row+str(j)
                                         first_row+=1
                                     else:
-                                        start_row=start_row+","+j
+                                        start_row=start_row+","+str(j)
                                 start_row=start_row+"\n"
                                 time_list.append(start_row)
                         except Exception:
-                            print("Error")
+                            messagebox.showinfo("Сейчас обрабатывается", file_from_directory)
                     elif status==2:
                         try:
                             if first_row>0 and int(row[0])>=int(stop) and int(row[1])<=int(start):
-                                print(row)
                                 rows=str()
                                 first_ellem=0
                                 for j in row:
@@ -79,13 +79,13 @@ def read_csv(login:str,file:list,start:int,stop:int,status:int)->list:
     p.append(list_row)
     p1=list()
     p1.append(p)
-    print(p)
+    print("PIDR",p1)
     return p1
 
 
-def save_result(list_row):
+def save_result(list_row,i):
     text=""
-    text=text+"\n"
+    print("Start save")
     with open("result.csv","w") as file:
         for i in list_row:
             text=text+i
@@ -362,7 +362,8 @@ class GUI():
 
     def try_save(self):
         if self.list_check==1:
-            self.my_pool_save.apply_async(func=save_result,args=(self.list_row)) 
+            print(self.list_row)
+            self.my_pool_save.apply_async(func=save_result,args=(self.list_row,0)) 
         else:
             messagebox.showinfo('Сant save', 'We not finished read files,pleas wait')
 
