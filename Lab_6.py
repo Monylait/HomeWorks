@@ -234,7 +234,7 @@ class GUI():
             messagebox.showinfo('Rows', 'incorrect')
             Errors+=1
         if  self.file!=None and time==1:
-            self.my_pool.apply_async(func=read_csv,args=("",self.file,0,0,2),callback=self.table_data) 
+            self.my_pool.apply_async(func=read_csv,args=("",self.file,0,0,1),callback=self.table_data) 
             func_start=1
         else: 
             messagebox.showinfo('Way', 'incorrect')
