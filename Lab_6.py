@@ -79,7 +79,6 @@ def read_csv(login:str,file:list,start:int,stop:int,status:int)->list:
     p.append(list_row)
     p1=list()
     p1.append(p)
-    print("PIDR",p1)
     return p1
 
 
