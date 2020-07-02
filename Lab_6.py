@@ -85,10 +85,9 @@ def read_csv(login:str,file:list,start:int,stop:int,status:int)->list:
 def save_result(list_row,i):
     text=""
     print("Start save")
-    with open("result.csv","w") as file:
+    with open("result.csv","a") as file:
         for i in list_row:
-            text=text+i
-        file.write(text)
+            file.write(i)
     messagebox.showinfo("Успех", "Успешно сохранено в файле result.csv")
 
 
