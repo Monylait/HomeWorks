@@ -19,12 +19,12 @@ def read_csv(login:str,file:list,start:int,stop:int,status:int)->list:
     list_row=list()
     time_list=list()
     first_row=0
-    print(status)
     for file_from_directory in file:
         start_row=""
         with open(file_from_directory) as f:
             time_list=list()
             reader = csv.reader(f)
+            print(login)
             for row in reader: 
                     if status==1:
                         try:
@@ -232,7 +232,7 @@ class GUI():
             messagebox.showinfo('Rows', 'incorrect')
             Errors+=1
         if  self.file!=None and time==1:
-            self.my_pool.apply_async(func=read_csv,args=("",self.file,0,0,1),callback=self.table_data) 
+            self.my_pool.apply_async(func=read_csv,args=(self.login,self.file,0,0,1),callback=self.table_data) 
             func_start=1
         else: 
             messagebox.showinfo('Way', 'incorrect')
