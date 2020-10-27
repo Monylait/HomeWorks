@@ -1,0 +1,5 @@
+Group_Key -
+ID_app -
+Secur_Key -
+Servise_Access_Key -
+AT -
