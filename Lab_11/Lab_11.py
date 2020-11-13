@@ -184,12 +184,12 @@ class Window(QWidget):
             country_name='None'
             hostnames='None'
             data='None'
-            product='None'
-            oS='None'
+            product=  'None'
+            oS=       'None'
             timestamp='None'
-            banner='None'
-            org='None'
-            port='None'
+            banner=   'None'
+            org=      'None'
+            port=     'None'
             flag=True
             for key in response:
                 if key=="error":
@@ -208,52 +208,68 @@ class Window(QWidget):
                         hostnames="None"
                 if key=="data":
                     data=response[key]
-                    data=data[0]
-                for key in data:
-                    if key=="product":
-                        product=data[key]
-                    if key=="os":
-                        oS=data[key]
-                    if key=="timestamp":
-                        timestamp=data[key]
-                    if key=="banner":
-                        banner=data[key]
-                    if key=="org":
-                        org=data[key]
-                    if key=="port":
-                        port=data[key]
+                    spisok_data=list()
+                    for i in data:
+                        product=  'None'
+                        oS=       'None'
+                        timestamp='None'
+                        banner=   'None'
+                        org=      'None'
+                        port=     'None'
+                        for key in i:
+                            if key=="product":
+                                product=i[key]
+                            if key=="os":
+                                oS=i[key]
+                            if key=="timestamp":
+                                timestamp=i[key]
+                            if key=="banner":
+                                banner=i[key]
+                            if key=="org":
+                                org=i[key]
+                            if key=="port":
+                                port=i[key]
+                        spisok_data.append(str(product)+"|"+str(oS)+"|"+str(timestamp)+"|"+str(banner)+"|"+str(port)+"|"+str(org))
             while flag:
-                j=self.J%10
-                self.tableWidget.setHorizontalHeaderLabels(["Time scan", "IP адрес", "Country_name","Hostnames","Product","Os","Timestamp","Banner","Port","Org"])
-                self.tableWidget.setItem(j, 0, QTableWidgetItem(str(time)))
-                self.tableWidget.setItem(j, 1, QTableWidgetItem(str(ip)))
-                self.tableWidget.setItem(j, 2, QTableWidgetItem(str(country_name)))
-                self.tableWidget.setItem(j, 3, QTableWidgetItem(str(hostnames)))
-                self.tableWidget.setItem(j, 4, QTableWidgetItem(str(product)))
-                self.tableWidget.setItem(j, 5, QTableWidgetItem(str(oS)))
-                self.tableWidget.setItem(j, 6, QTableWidgetItem(str(timestamp)))
-                self.tableWidget.setItem(j, 7, QTableWidgetItem(str(banner)))
-                self.tableWidget.setItem(j, 8, QTableWidgetItem(str(port)))
-                self.tableWidget.setItem(j, 9, QTableWidgetItem(str(org)))
-                self.J+=1
-                if self.J>10:
-                    with open("Log.csv","r",encoding="utf-8") as log:
-                        list_log=log.read().split("\n")
-                    with open("Log.csv","w",encoding="utf-8") as log:
-                        string=str(time)+"|"+str(ip)+"|"+str(country_name)+"|"+str(hostnames)+"|"+str(product)+"|"+str(oS)+"|"+str(timestamp)+"|"+str(banner)+"|"+str(org)+"|"+str(port)
-                        list_log[j]=string
-                        for i in list_log:
-                            log.write(i+"\n")
-                else:
-                    try:
-                        with open("Log.csv","a",encoding="utf-8") as log:
-                            string=str(time)+"|"+str(ip)+"|"+str(country_name)+"|"+str(hostnames)+"|"+str(product)+"|"+str(oS)+"|"+str(timestamp)+"|"+str(banner)+"|"+str(org)+"|"+str(port)+"\n"
-                            log.write(string)
-                    except FileNotFoundError:
+                for i in spisok_data:
+                    i=i.split("|")
+                    j=self.J%10
+                    product=i[0]
+                    oS=i[1]
+                    timestamp=i[2]
+                    banner=i[3]
+                    port=i[4]
+                    org=i[5]
+                    self.tableWidget.setHorizontalHeaderLabels(["Time scan", "IP адрес", "Country_name","Hostnames","Product","Os","Timestamp","Banner","Port","Org"])
+                    self.tableWidget.setItem(j, 0, QTableWidgetItem(str(time)))
+                    self.tableWidget.setItem(j, 1, QTableWidgetItem(str(ip)))
+                    self.tableWidget.setItem(j, 2, QTableWidgetItem(str(country_name)))
+                    self.tableWidget.setItem(j, 3, QTableWidgetItem(str(hostnames)))
+                    self.tableWidget.setItem(j, 4, QTableWidgetItem(str(product)))
+                    self.tableWidget.setItem(j, 5, QTableWidgetItem(str(oS)))
+                    self.tableWidget.setItem(j, 6, QTableWidgetItem(str(timestamp)))
+                    self.tableWidget.setItem(j, 7, QTableWidgetItem(str(banner)))
+                    self.tableWidget.setItem(j, 8, QTableWidgetItem(str(port)))
+                    self.tableWidget.setItem(j, 9, QTableWidgetItem(str(org)))
+                    self.J+=1
+                    if self.J>10:
+                        with open("Log.csv","r",encoding="utf-8") as log:
+                            list_log=log.read().split("\n")
                         with open("Log.csv","w",encoding="utf-8") as log:
-                            string=str(time)+"|"+str(ip)+"|"+str(country_name)+"|"+str(hostnames)+"|"+str(product)+"|"+str(oS)+"|"+str(timestamp)+"|"+str(banner)+"|"+str(org)+"|"+str(port)+"\n"
-                            log.write(string)
-                self.CheckApi()
+                            string=str(time)+"|"+str(ip)+"|"+str(country_name)+"|"+str(hostnames)+"|"+str(product)+"|"+str(oS)+"|"+str(timestamp)+"|"+str(banner)+"|"+str(port)+"|"+str(org)
+                            list_log[j]=string
+                            for i in list_log:
+                                log.write(i+"\n")
+                    else:
+                        try:
+                            with open("Log.csv","a",encoding="utf-8") as log:
+                                string=str(time)+"|"+str(ip)+"|"+str(country_name)+"|"+str(hostnames)+"|"+str(product)+"|"+str(oS)+"|"+str(timestamp)+"|"+str(banner)+"|"+str(port)+"|"+str(org)+"\n"
+                                log.write(string)
+                        except FileNotFoundError:
+                            with open("Log.csv","w",encoding="utf-8") as log:
+                                string=str(time)+"|"+str(ip)+"|"+str(country_name)+"|"+str(hostnames)+"|"+str(product)+"|"+str(oS)+"|"+str(timestamp)+"|"+str(banner)+"|"+str(port)+"|"+str(org)+"\n"
+                                log.write(string)
+                    self.CheckApi()
                 flag=False
                 break
     
