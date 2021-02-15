@@ -44,7 +44,7 @@ def parsing():
     document=dict()
     list_of_posts=list()
     while offset<60000:
-        response=requests.get("https://api.vk.com/method/wall.get?owner_id=-112499374&offset="+str(offset)+"&count=100&access_token="+AT+"&v=5.124")
+        response=requests.get("https://api.vk.com/method/wall.get?owner_id=-1&offset="+str(offset)+"&count=100&access_token="+AT+"&v=5.124")
         print(str(response.status_code)+" >> "+str(offset)+"\n"+"-------------\n")
         response=response.json()
         for key in response:
@@ -120,7 +120,7 @@ def search():
 
 def Destroy_Zakha_Chat():
     driver = Chrome()
-    string="https://vk.com/dev/messages.send?params[user_id]=327099867&params[random_id]="+str(random.randint(0,100000000))+"&params[peer_id]=327099867&params[message]=IvanUshka_Interneshanel_Ne_Boley&params[dont_parse_links]=0&params[disable_mentions]=0&params[intent]=default&params[v]=5.124"
+    string="https://vk.com/dev/messages.send?params[user_id]=0&params[random_id]="+str(random.randint(0,100000000))+"&params[peer_id]=0&params[message]=IvanUshka_Interneshanel_Ne_Boley&params[dont_parse_links]=0&params[disable_mentions]=0&params[intent]=default&params[v]=5.124"
     driver.get("https://vk.com/fox.ibks")   #захожу на свою страницу для авторизации в браузере, после мне станет доступно окно отправки тестовых сообщений 
     i=int(input(">>"))
     for z in range(1,50000):
@@ -132,7 +132,7 @@ def Destroy_Zakha_Chat():
             button=i.find_elements_by_class_name('flat_button')
             button=button[0]
             button.click()
-        string="https://vk.com/dev/messages.send?params[user_id]=327099867&params[random_id]="+str(random.randint(0,100000000))+"&params[peer_id]=327099867&params[message]=IvanUshka_Interneshanel_Ne_Boley "+str(z)+"&params[dont_parse_links]=0&params[disable_mentions]=0&params[intent]=default&params[v]=5.124"
+        string="https://vk.com/dev/messages.send?params[user_id]=0&params[random_id]="+str(random.randint(0,100000000))+"&params[peer_id]=0&params[message]=IvanUshka_Interneshanel_Ne_Boley "+str(z)+"&params[dont_parse_links]=0&params[disable_mentions]=0&params[intent]=default&params[v]=5.124"
         #time.sleep()
 
 
