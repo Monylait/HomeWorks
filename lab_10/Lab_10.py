@@ -1,9 +1,9 @@
 #############################################
 #                                           #
-#   ID_GROUP                   -112499374   #
+#   ID_GROUP                                #
 #   start from                 1453075200   #
 #   end from                   1603152000   #
-#   id Zakha                   327099867    #
+#   id user                                 #
 #############################################
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -121,7 +121,7 @@ def search():
 def Destroy_Zakha_Chat():
     driver = Chrome()
     string="https://vk.com/dev/messages.send?params[user_id]=0&params[random_id]="+str(random.randint(0,100000000))+"&params[peer_id]=0&params[message]=IvanUshka_Interneshanel_Ne_Boley&params[dont_parse_links]=0&params[disable_mentions]=0&params[intent]=default&params[v]=5.124"
-    driver.get("https://vk.com/fox.ibks")   #захожу на свою страницу для авторизации в браузере, после мне станет доступно окно отправки тестовых сообщений 
+    driver.get("https://vk.com/")   #захожу на свою страницу для авторизации в браузере, после мне станет доступно окно отправки тестовых сообщений 
     i=int(input(">>"))
     for z in range(1,50000):
         driver.get(string)
