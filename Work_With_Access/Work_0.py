@@ -83,17 +83,7 @@ class GUI():
 
     def Add_to_list(self):
         print("work")
-        s1 = str(self.scal.get())
-        print(self.login_en.get())
-        print(s1)
-        print(self.var.get())
-        self.cursor.execute('SELECT TOP 1 * FROM Member ORDER BY ID DESC')
-        print(self.cursor.fetchall())
-        self.cursor.execute('''
-                    INSERT INTO Members (ID,Firstname, Surname, DateOfBirth)
-                    VALUES(self.login_en.get(), 'None',s1)
-                  ''')
-        self.conn.commit()
+        
 
 
     def scale_get():
