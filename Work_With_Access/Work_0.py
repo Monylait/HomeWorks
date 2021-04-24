@@ -74,12 +74,7 @@ class GUI():
 
     
     def upd(self):
-        self.cursor.execute('''
-                UPDATE Table_Name 
-                SET Column1_Name = value1, Column2_Name = value2
-                WHERE First_Name = 'Maria' (condition)
-               ''')
-        self.conn.commit()
+        print("Update")
 
     def Add_to_list(self):
         print("work")
