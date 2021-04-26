@@ -4,7 +4,7 @@ from tkinter import scrolledtext
 from tkinter import END
 from tkinter import HORIZONTAL
 from tkinter.ttk import Combobox
-import pyodbc as sqlMS
+import pypyodbc as sqlMS
 from tkinter import Tk, BOTH, Listbox, StringVar, END
 from tkinter.ttk import Frame, Label
  
