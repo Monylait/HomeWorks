@@ -1,18 +1,15 @@
-
-print("hello world")
 flag=True
 j=0
 while flag:
     value_1=int(input("enter val_1 "))
     value_2=int(input("enter val_2 "))
     command=input("input operation (+,-,/,*) - ")
-    #command [ +, -, *, /]
     if command=='+':
            print(int(value_1)+int(value_2))
     elif command=='-':
            print(int(value_1)-int(value_2))
     elif command=='*':
-            print(int(value_1)*int(value_2))
+            print(int(value_1)*int(value_2))S
     elif command=='/':
             print(int(value_1)/int(value_2))
     else :
